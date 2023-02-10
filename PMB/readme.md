@@ -115,3 +115,60 @@ Here is an example of a blind RCE :
 Never trust user input and if possible do not decompress file with any external command that are controlled by user input.
 
 ![Remote Code Execution - Remediation](https://raw.githubusercontent.com/AetherBlack/CVE/master/PMB/img/CVE-XXXX_RemoteCodeExecution/Remediation.png)
+
+## PMB 7.4.6 - Open Redirect - CVE-XXXX
+
+- Affected version : 7.4.6
+- Vulnerability Type : Open Redirect (Unauthenticated)
+- CWE-601
+
+### Description
+
+The web app accepts a user-controlled input that specifies a link to an external site, and uses that link in a Redirect. This simplifies phishing attacks.
+
+### Exploitation
+
+1. Go to `http://website.com/pmb/opac_css/pmb.php`
+2. Set `from` parameter to empty.
+3. `url` parameter to the URL you want to redirect to.
+4. `hash` parameter to the md5 of your `url` parameter.
+
+### PoC
+
+Here is an example of an Open Redirect :
+
+![Open Redirect - Exploit](https://raw.githubusercontent.com/AetherBlack/CVE/master/PMB/img/CVE-XXXX_OpenRedirect/Exploit.png)
+
+### Remediation
+
+Check the domain with a whitelist.
+
+![Open Redirect - Remediation](https://raw.githubusercontent.com/AetherBlack/CVE/master/PMB/img/CVE-XXXX_OpenRedirect/Remediation.png)
+
+## PMB 7.4.6 - SQL Injection - CVE-XXXX
+
+- Affected version : 7.4.6
+- Vulnerability Type : SQL Injection (Unauthenticated)
+- CWE-89
+
+### Description
+
+The web app incorrectly neutralizes user-controllable input before it is placed in an SQL Query. This allows an attacker to make a SQL Injection on `/pmb/opac_css/export.php` endpoint via the `notice_id` parameter. This SQL Injection can lead to an account takeover if the SESSID cookie of the admin account can be extracted.
+
+### Exploitation
+
+1. Go to `http://website.com/pmb/opac_css/export.php`
+2. Set `action` parameter to `export`.
+3. `notice_id` parameter need to start by `es` after that you can add your SQL payload.
+
+### PoC
+
+Here is an example of an SQL Injection :
+
+![SQL Injection - Exploit](https://raw.githubusercontent.com/AetherBlack/CVE/master/PMB/img/CVE-XXXX_OpacCSS_SQLInjection/Exploit.png)
+
+### Remediation
+
+Use prepared SQL Query or add simple quote in this specific SQL query.
+
+![SQL Injection - Remediation](https://raw.githubusercontent.com/AetherBlack/CVE/master/PMB/img/CVE-XXXX_OpacCSS_SQLInjection/Remediation.png)
